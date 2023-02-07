@@ -14,10 +14,27 @@ app.post('/', async (req: Request, res: Response) => {
   });
   res.json(user);
 });
-
+app.post('/createManyUsers', async (req: Request, res: Response) => {
+  const { userList } = req.body;
+  const users = await prisma.user.createMany({
+    data: userList,
+  });
+  res.json(users);
+});
 app.get('/', async (req: Request, res: Response) => {
   const users = await prisma.user.findMany();
   res.json(users);
+});
+
+app.get('/byId/:id', async (req: Request, res: Response) => {
+  const id = req.params.id;
+
+  const user = await prisma.user.findUnique({
+    where: {
+      id: Number(id),
+    },
+  });
+  res.json(user);
 });
 
 app.put('/', async (req: Request, res: Response) => {
