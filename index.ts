@@ -4,6 +4,7 @@ import express, { Request, Response } from 'express';
 const app = express();
 app.use(express.json());
 const prisma = new PrismaClient();
+
 app.post('/', async (req: Request, res: Response) => {
   const { username, password } = req.body;
   const user = await prisma.user.create({
@@ -14,6 +15,7 @@ app.post('/', async (req: Request, res: Response) => {
   });
   res.json(user);
 });
+
 app.post('/createManyUsers', async (req: Request, res: Response) => {
   const { userList } = req.body;
   const users = await prisma.user.createMany({
@@ -21,8 +23,19 @@ app.post('/createManyUsers', async (req: Request, res: Response) => {
   });
   res.json(users);
 });
+
+app.post('/createManyCars', async (req: Request, res: Response) => {
+  const { carList } = req.body;
+  const cars = await prisma.car.createMany({
+    data: carList,
+  });
+  res.json(cars);
+});
+
 app.get('/', async (req: Request, res: Response) => {
-  const users = await prisma.user.findMany();
+  const users = await prisma.user.findMany({
+    include: { cars: true },
+  });
   res.json(users);
 });
 
