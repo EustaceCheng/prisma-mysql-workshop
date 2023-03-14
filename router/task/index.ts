@@ -4,11 +4,11 @@ import express, { Request, Response } from 'express';
 const router = express.Router();
 const prisma = new PrismaClient();
 
-router.get('/:task_id', async (req: Request<{ task_id: string }>, res: Response) => {
-    const { task_id } = req.params;
-    const taskWithUserAndCategory = await prisma.task.findUnique({
-        where: { task_id: Number(task_id) },
-
+router.get('/', async (req: Request, res: Response) => {
+    const user_id = Number(req.query.user_id);
+    const task_id = Number(req.query.task_id);
+    const taskWithUserAndCategory = await prisma.task.findFirst({
+        where: { task_id, user_id },
         include: {
             user: {
                 select: { username: true },

@@ -13,9 +13,9 @@ datasource db {
 // Define the User model
 model User {
     user_id    Int        @id @default(autoincrement())
-    username   String
+    username   String     @unique
     password   String
-    tasks      Task[]
+    tasks      Task[] 
     categories Category[]
 }
 
@@ -38,6 +38,6 @@ model Category {
     category_id Int    @id @default(autoincrement())
     user_id     Int
     name        String
-    tasks       Task[]
+    tasks       Task[]   
     user        User   @relation(fields: [user_id], references: [user_id])
 }

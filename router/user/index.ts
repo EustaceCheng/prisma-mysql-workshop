@@ -4,8 +4,8 @@ import express, { Request, Response } from 'express';
 const router = express.Router();
 const prisma = new PrismaClient();
 
-router.get('/', async (req: Request<{}, {}, { user_id: number }>, res: Response) => {
-    const { user_id } = req.body;
+router.get('/', async (req: Request, res: Response) => {
+    const user_id = Number(req.query.user_id);
     const getUserName = await prisma.user.findUnique({
         where: { user_id },
         select: {

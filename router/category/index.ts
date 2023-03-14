@@ -4,9 +4,8 @@ import express, { Request, Response } from 'express';
 const router = express.Router();
 const prisma = new PrismaClient();
 
-router.get('/', async (req: Request<{}, {}, { user_id: number }>, res: Response) => {
-    const { user_id } = req.body;
-
+router.get('/', async (req, res: Response) => {
+    const user_id = Number(req.query.user_id);
     const categoriesList = await prisma.category.findMany({
         where: { user_id },
         select: {
@@ -35,8 +34,8 @@ router.get('/', async (req: Request<{}, {}, { user_id: number }>, res: Response)
 
     res.json(list);
 });
-router.get('/options', async (req: Request<{}, {}, { user_id: number }>, res: Response) => {
-    const { user_id } = req.body;
+router.get('/options', async (req, res: Response) => {
+    const user_id = Number(req.query.user_id);
 
     const categoriesList = await prisma.category.findMany({
         where: { user_id },
@@ -49,22 +48,20 @@ router.get('/options', async (req: Request<{}, {}, { user_id: number }>, res: Re
     res.json(categoriesList);
 });
 
-router.get(
-    '/:category_id',
-    async (req: Request<{ category_id: string }, {}, { user_id: number }>, res: Response) => {
-        const { category_id } = req.params;
-        const { user_id } = req.body;
-        const categoriesWithTaskCounts = await prisma.category.findMany({
-            where: { user_id, category_id: Number(category_id) },
-            select: {
-                name: true,
-                tasks: true,
-                _count: true,
-            },
-        });
-        res.json(categoriesWithTaskCounts);
-    },
-);
+router.get('/detail', async (req, res: Response) => {
+    const category_id = Number(req.query.category_id);
+    const user_id = Number(req.query.user_id);
+
+    const categoriesWithTaskCounts = await prisma.category.findMany({
+        where: { user_id, category_id },
+        select: {
+            name: true,
+            tasks: true,
+            _count: true,
+        },
+    });
+    res.json(categoriesWithTaskCounts);
+});
 
 router.post(
     '/',
