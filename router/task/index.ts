@@ -4,7 +4,7 @@ import express, { Request, Response } from 'express';
 const router = express.Router();
 const prisma = new PrismaClient();
 
-router.get('/', async (req: Request, res: Response) => {
+router.get('/detail', async (req: Request, res: Response) => {
     const user_id = Number(req.query.user_id);
     const task_id = Number(req.query.task_id);
     const taskWithUserAndCategory = await prisma.task.findFirst({
