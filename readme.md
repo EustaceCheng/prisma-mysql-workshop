@@ -1,9 +1,16 @@
-# Prisma_Test
+# Prisma-MySQL-Workshop
 
 ## install mysql with docker
 
+build docker
+
 ```
 docker build -t mysql-docker .
+```
+
+run container
+
+```
 docker run --name mysql-container -p 3307:3306 -d mysql-docker
 ```
 
