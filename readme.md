@@ -21,6 +21,16 @@ docker run --name mysql-container -p 3307:3306 -d mysql-docker
 
 the container will run on 3307 port
 
+## open log
+```
+SET GLOBAL general_log = 'ON';
+```
+
+## check log path
+```
+SHOW VARIABLES LIKE 'general_log%'
+```
+
 ## install package
 
 ```
