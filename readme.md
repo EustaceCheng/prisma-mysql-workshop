@@ -1,5 +1,10 @@
 # Prisma-MySQL-Workshop
 
+## require
+- [docker](https://www.docker.com/products/docker-desktop/)
+- [insomnia](https://insomnia.rest/download)
+- [mysql workbench](https://dev.mysql.com/downloads/workbench/)
+
 ## install mysql with docker
 
 build docker
