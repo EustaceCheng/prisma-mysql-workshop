@@ -27,7 +27,7 @@ model Task {
     title       String
     description String?
     due_date    DateTime?
-    priority    Decimal?
+    priority    Int?
     status      Boolean   @default(false)
     user        User      @relation(fields: [user_id], references: [user_id])
     category    Category? @relation(fields: [category_id], references: [category_id])
